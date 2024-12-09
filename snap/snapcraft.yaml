@@ -1,0 +1,45 @@
+name: karp
+base: core22
+adopt-info: karp
+version: "0.0.1"
+grade: stable
+confinement: strict
+
+package-repositories:
+  - type: apt
+    ppa: qpdf/qpdf
+
+parts:
+  karp:
+    plugin: cmake
+    source: https://invent.kde.org/graphics/karp.git
+    # source-tag: 
+    build-packages:
+      - libqpdf-dev
+      - libxkbcommon-dev
+      - libvulkan-dev
+    cmake-parameters:
+      - -DCMAKE_INSTALL_PREFIX=/usr
+    stage-packages:
+      - libqpdf29
+      - ghostscript
+    parse-info: [usr/share/metainfo/org.kde.karp.metainfo.xml]
+    prime:
+      - -usr/share/doc
+      - -usr/share/lintian
+
+# plugs:
+#   desktop:
+#     desktop-file-ids: [org.kde.karp]
+
+apps:
+  karp:
+    command: usr/bin/karp
+    desktop: usr/share/applications/org.kde.karp.desktop
+    common-id: org.kde.karp
+    environment:
+      XDG_CONFIG_DIRS: $SNAP_REAL_HOME/.config
+    plugs:
+      - home
+      - removable-media
+    extensions: [kde-neon-6]
