@@ -1,5 +1,5 @@
 name: karp
-base: core22
+base: core24
 adopt-info: karp
 version: "0.0.1"
 grade: stable
@@ -16,15 +16,21 @@ parts:
     # source-tag: 
     build-packages:
       - libqpdf-dev
+      - libproxy1v5
       - libxkbcommon-dev
       - libvulkan-dev
     cmake-parameters:
       - -DCMAKE_INSTALL_PREFIX=/usr
     stage-packages:
-      - libqpdf29
+      - libqpdf30
       - ghostscript
     parse-info: [usr/share/metainfo/org.kde.karp.metainfo.xml]
     prime:
+      - -usr/include
+      - -usr/sbin
+      - -usr/share/man
+      - -usr/share/bash*
+      - -usr/share/pkgconfig
       - -usr/share/doc
       - -usr/share/lintian
 
@@ -37,8 +43,6 @@ apps:
     command: usr/bin/karp
     desktop: usr/share/applications/org.kde.karp.desktop
     common-id: org.kde.karp
-    environment:
-      XDG_CONFIG_DIRS: $SNAP_REAL_HOME/.config
     plugs:
       - home
       - removable-media
